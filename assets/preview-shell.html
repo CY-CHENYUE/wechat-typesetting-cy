@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{文章标题}} — 公众号排版预览</title>
+<!--
+  预览外壳（不会被复制进公众号）
+  占位符：{{文章标题}} {{内容底色}} {{风格说明}}，内容插入到 #wechat-content 内
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 16px 80px; background: #EDEDED; font-family: -apple-system, 'PingFang SC', sans-serif; }
+  .toolbar {
+    position: sticky; top: 12px; z-index: 10;
+    max-width: 677px; margin: 0 auto 8px;
+    background: #fff; border-radius: 12px; padding: 12px 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.10);
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .toolbar button {
+    border: none; border-radius: 8px; padding: 9px 16px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  #copy-btn { background: #07C160; color: #fff; }
+  #copy-btn.done { background: #06AD56; }
+  #width-btn { background: #F2F2F2; color: #333; }
+  .hint { font-size: 12px; color: #888; }
+  .meta { max-width: 677px; margin: 0 auto 16px; font-size: 12px; color: #999; padding: 0 4px; }
+  .wrapper {
+    max-width: 677px; margin: 0 auto;
+    background: {{内容底色}};
+    box-shadow: 0 2px 24px rgba(0,0,0,.08);
+    transition: max-width .25s ease;
+  }
+  body.phone .wrapper { max-width: 375px; }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button id="copy-btn" onclick="copyContent()">一键复制到公众号</button>
+  <button id="width-btn" onclick="document.body.classList.toggle('phone'); this.textContent = document.body.classList.contains('phone') ? '电脑宽度' : '手机宽度';">手机宽度</button>
+  <span class="hint">复制后到公众号编辑器直接粘贴（⌘V）；粘贴后检查图片是否转存成功</span>
+</div>
+<div class="meta">{{风格说明}}</div>
+<div class="wrapper">
+<div id="wechat-content">
+
+<!-- 排版内容插入这里 -->
+
+</div>
+</div>
+<script>
+async function copyContent() {
+  const el = document.getElementById('wechat-content');
+  const btn = document.getElementById('copy-btn');
+  let ok = false;
+  // 首选 Clipboard API：同时写入 text/html 与 text/plain
+  try {
+    const item = new ClipboardItem({
+      'text/html': new Blob([el.innerHTML], { type: 'text/html' }),
+      'text/plain': new Blob([el.innerText], { type: 'text/plain' })
+    });
+    await navigator.clipboard.write([item]);
+    ok = true;
+  } catch (e) { /* 走兜底 */ }
+  // 兜底：选区复制（与手动全选复制等效）
+  if (!ok) {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    ok = document.execCommand('copy');
+    sel.removeAllRanges();
+  }
+  if (ok) {
+    btn.classList.add('done');
+    btn.textContent = '✓ 已复制，去编辑器粘贴';
+    setTimeout(() => { btn.classList.remove('done'); btn.textContent = '一键复制到公众号'; }, 3000);
+  } else {
+    alert('自动复制失败：请手动选中下方全部内容后复制');
+  }
+}
+</script>
+</body>
+</html>

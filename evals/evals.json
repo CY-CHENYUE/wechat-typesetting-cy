@@ -1,0 +1,121 @@
+{
+  "skill_name": "wechat-typesetting-cy",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "essay-opinion-piece",
+      "prompt": "这是我明天要发公众号的文章，帮我排个版，排好我要直接贴进公众号编辑器。文章在 /Users/cychenyue/Documents/cc-skills/wechat-typesetting-cy/evals/articles/essay-meetings.md",
+      "expected_output": "排版后的公众号 HTML 预览页：自动选择适合观点随笔的风格（蓝调杂志/极简黑白/商务蓝灰之一），全内联样式无 flex/渐变，含一键复制按钮、风格注释与备选风格说明",
+      "files": [
+        "/Users/cychenyue/Documents/cc-skills/wechat-typesetting-cy/evals/articles/essay-meetings.md"
+      ],
+      "assertions": [
+        "输出了排版 HTML 文件且包含中文内容",
+        "正文区全内联样式（style= ≥ 20 处）",
+        "正文区无 flex/grid 布局（微信粘贴后会塌）",
+        "正文区无 position/float",
+        "正文区无渐变（微信不渲染）",
+        "正文区背景色未使用 rgba()（微信不渲染 rgba 背景）",
+        "正文区无纯白 #ffffff/#fff 背景（会被过滤，应为 #fefefe）",
+        "正文区未使用裸 ul/ol/li（部分端样式丢失）",
+        "正文区无 h1-h6 标签",
+        "复制内容区无 <script>",
+        "含机器可读风格注释且带备选方向（<!-- 风格方向: X | 备选: ... -->）",
+        "预览页含一键复制按钮",
+        "排版风格与文章内容气质匹配（观点随笔应得到杂志/极简类风格而非科技风）",
+        "组件使用克制、版面有呼吸感（卡片不连发、强调不过密、段落短）",
+        "交付说明包含粘贴流程指引与备选风格参考",
+        "版面有设计感（标题区可当封面、相邻字号档位差≥1.5倍、有且只有一个视觉记忆点、装饰语言统一）",
+        "内容零改动：原文逐句完整保留（verify-completeness 脚本通过），无删改/改写/重复，无自拟小标题与代写副题，版式元素外无新增文字"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "tech-data-report",
+      "prompt": "帮我把这篇文章排成微信公众号的格式，要有设计感一点。文章在 /Users/cychenyue/Documents/cc-skills/wechat-typesetting-cy/evals/articles/tech-price-war.md",
+      "expected_output": "排版后的公众号 HTML 预览页：识别出数据点与时间线并用对应组件呈现（数据栏/时间线 table），风格匹配科技报道气质（暗夜科技/商务蓝灰），深色整页时用 table 骨架，含一键复制按钮与风格注释",
+      "files": [
+        "/Users/cychenyue/Documents/cc-skills/wechat-typesetting-cy/evals/articles/tech-price-war.md"
+      ],
+      "assertions": [
+        "输出了排版 HTML 文件且包含中文内容",
+        "正文区全内联样式（style= ≥ 20 处）",
+        "正文区无 flex/grid 布局（微信粘贴后会塌）",
+        "正文区无 position/float",
+        "正文区无渐变（微信不渲染）",
+        "正文区背景色未使用 rgba()（微信不渲染 rgba 背景）",
+        "正文区无纯白 #ffffff/#fff 背景（会被过滤，应为 #fefefe）",
+        "正文区未使用裸 ul/ol/li（部分端样式丢失）",
+        "正文区无 h1-h6 标签",
+        "复制内容区无 <script>",
+        "含机器可读风格注释且带备选方向（<!-- 风格方向: X | 备选: ... -->）",
+        "预览页含一键复制按钮",
+        "数据/时间线用 table 组件呈现（多列不用 flex）",
+        "排版风格与文章内容气质匹配（数据驱动的科技报道应得到科技/商务类风格）",
+        "组件使用克制、版面有呼吸感（卡片不连发、强调不过密、段落短）",
+        "交付说明包含粘贴流程指引与备选风格参考",
+        "版面有设计感（标题区可当封面、相邻字号档位差≥1.5倍、有且只有一个视觉记忆点、装饰语言统一）",
+        "内容零改动：原文逐句完整保留（verify-completeness 脚本通过），无删改/改写/重复，无自拟小标题与代写副题，版式元素外无新增文字"
+      ]
+    },
+    {
+      "id": 3,
+      "eval_name": "lifestyle-tutorial",
+      "prompt": "这篇生活方式的文章要发我的公众号，帮我排版，风格跟内容气质搭一点。文章在 /Users/cychenyue/Documents/cc-skills/wechat-typesetting-cy/evals/articles/lifestyle-coldbrew.md",
+      "expected_output": "排版后的公众号 HTML 预览页：风格匹配温暖生活气质（暖纸阅读/清新治愈，而非仅有的旧两套模板），步骤用步骤块、准备清单用清单卡，含一键复制按钮与风格注释",
+      "files": [
+        "/Users/cychenyue/Documents/cc-skills/wechat-typesetting-cy/evals/articles/lifestyle-coldbrew.md"
+      ],
+      "assertions": [
+        "输出了排版 HTML 文件且包含中文内容",
+        "正文区全内联样式（style= ≥ 20 处）",
+        "正文区无 flex/grid 布局（微信粘贴后会塌）",
+        "正文区无 position/float",
+        "正文区无渐变（微信不渲染）",
+        "正文区背景色未使用 rgba()（微信不渲染 rgba 背景）",
+        "正文区无纯白 #ffffff/#fff 背景（会被过滤，应为 #fefefe）",
+        "正文区未使用裸 ul/ol/li（部分端样式丢失）",
+        "正文区无 h1-h6 标签",
+        "复制内容区无 <script>",
+        "含机器可读风格注释且带备选方向（<!-- 风格方向: X | 备选: ... -->）",
+        "预览页含一键复制按钮",
+        "风格方向超出旧两套模板（验证风格库扩展生效）",
+        "排版风格与文章内容气质匹配（温暖生活教程应得到暖色/治愈类风格，而非黑底科技或冷蓝杂志）",
+        "组件使用克制、版面有呼吸感（步骤块/清单卡用对地方，卡片不连发）",
+        "交付说明包含粘贴流程指引与备选风格参考",
+        "版面有设计感（标题区可当封面、相邻字号档位差≥1.5倍、有且只有一个视觉记忆点、装饰语言统一）",
+        "内容零改动：原文逐句完整保留（verify-completeness 脚本通过），无删改/改写/重复，无自拟小标题与代写副题，版式元素外无新增文字"
+      ]
+    },
+    {
+      "id": 4,
+      "eval_name": "media-placeholders",
+      "prompt": "这篇探店的文章要发公众号，里面标了图片和视频的位置，帮我排版。文章在 /Users/cychenyue/Documents/cc-skills/wechat-typesetting-cy/evals/articles/alley-pourover.md",
+      "expected_output": "排版后的公众号 HTML 预览页：两处【图：…】生成带编号的可视图片占位块、一处【视频：…】生成视频占位块（含编辑器插入指引），无 video/iframe 标签，附占位清单；风格按探店内容现场设计",
+      "files": [
+        "/Users/cychenyue/Documents/cc-skills/wechat-typesetting-cy/evals/articles/alley-pourover.md"
+      ],
+      "assertions": [
+        "输出了排版 HTML 文件且包含中文内容",
+        "正文区全内联样式（style= ≥ 20 处）",
+        "正文区无 flex/grid 布局（微信粘贴后会塌）",
+        "正文区无 position/float",
+        "正文区无渐变（微信不渲染）",
+        "正文区背景色未使用 rgba()（微信不渲染 rgba 背景）",
+        "正文区无纯白 #ffffff/#fff 背景（会被过滤，应为 #fefefe）",
+        "正文区未使用裸 ul/ol/li（部分端样式丢失）",
+        "正文区无 h1-h6 标签",
+        "复制内容区无 <script>",
+        "含机器可读风格注释且带备选方向（<!-- 风格方向: X | 备选: ... -->）",
+        "预览页含一键复制按钮",
+        "复制内容区无 video/iframe/audio（粘贴会被剥掉，视频用占位块）",
+        "两处图片标记生成可视占位块（单个 p 元素的虚线框+编号+建议内容，三击可删，非 HTML 注释）",
+        "视频标记生成视频占位块且含编辑器「视频」按钮插入指引",
+        "交付说明附媒体占位清单与替换流程",
+        "排版风格与探店随笔气质匹配（现场设计，非套用案例默认配色）",
+        "版面有设计感（标题区可当封面、相邻字号档位差≥1.5倍、有且只有一个视觉记忆点、装饰语言统一）",
+        "内容零改动：原文逐句完整保留（verify-completeness 脚本通过），无删改/改写/重复，无自拟小标题与代写副题，版式元素外无新增文字"
+      ]
+    }
+  ]
+}
