@@ -49,7 +49,7 @@ wechat-typesetting-cy/
 │   ├── examples/                   # 成品示例（学习组装方式，不是套用模板）
 │   │   ├── blue-minimal.html       # 蓝调杂志方向示例
 │   │   └── dark-tech.html          # 暗夜科技方向示例（深色 table 骨架）
-│   └── wechat-qr.jpg               # 联系二维码
+│   └── wechat-qr.jpg               # 公众号二维码
 ├── references/
 │   ├── wechat-compat.md            # 微信兼容【硬规则】×35 条 + 自检清单（违反就崩，永不可破）
 │   ├── design-craft.md             # 设计感手艺库【因文而异的判断，非硬规则】记忆点/对比/装饰/色彩/留白
@@ -81,6 +81,6 @@ MIT License
 
 <div align="center">
   <h3>联系作者</h3>
-  <p>扫码加微信，交流反馈</p>
-  <img src="assets/wechat-qr.jpg" alt="WeChat QR Code" width="200">
+  <p>扫码关注公众号，获取更新与交流反馈</p>
+  <img src="assets/wechat-qr.jpg" alt="WeChat Official Account QR Code" width="200">
 </div>
