@@ -1,10 +1,12 @@
 # 微信安全实现手法库
 
-这里的价值是 **DOM 结构**：每种手法都按 `wechat-compat.md` 硬规则验证过（全内联、无 flex、无渐变、列表用 p+span、多列用 table）。
+这里的价值是 **DOM 结构**：核心结构按 `wechat-compat.md` 硬规则设计（全内联、无 flex、无渐变、列表用 p+span、多列用 table）；具体文字归属、颜色与阴影仍要走四道门。
 
 使用方法：**保留结构，样式自己设计**——把 `{{token}}` 占位符和示例里的具体数值（颜色、圆角、边框、间距、装饰符号）全部换成本篇设计方案定下的值；示例值只是演示，不是默认值。设计方案需要库里没有的形态时可以自创结构，守住 compat 硬规则即可。
 
 **占位符约定**：`{{主色}}` `{{正文色}}` `{{标题色}}` `{{辅助灰}}` `{{浅底}}` `{{边色}}` `{{字体}}` `{{页底色}}`（取值全部来自本篇设计方案）
+
+**可见文字归属约定**：示例里的 `01`、`ENGLISH TAG`、`STEP 01`、`END`、媒体/作者占位等只是演示。生成时，文字来自原文就照排且不加标记；原文没有、只服务版式或操作的可见文字，放进独立元素并标 `data-layout-text="true"`，例如 `<span data-layout-text="true" style="...">01</span>`。不要把含原文的整张卡、整段或加了 `★…★` 等装饰的原句一起标掉；完整性校验会先去除装饰字符再检查重叠。该 data 属性只用于交付前校验，不承担样式。
 
 ## 目录
 
@@ -48,7 +50,7 @@
     <!-- 一个章节的全部内容（内部可以放 section 卡片，安全） -->
   </td></tr>
   <!-- 章节分隔带 -->
-  <tr><td style="background-color: {{分隔带色}}; height: 16px; font-size: 0; line-height: 0; border: none;">&nbsp;</td></tr>
+  <tr><td data-role="divider" style="background-color: {{分隔带色}}; height: 16px; font-size: 0; line-height: 0; border: none;">&nbsp;</td></tr>
 </table>
 </section>
 ```
@@ -61,8 +63,8 @@
 <section style="background-color: {{主色}}; padding: 14px 24px;">
   <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse; border: none;">
     <tr>
-      <td style="border: none; text-align: left;"><span style="color: #fefefe; font-size: 15px; font-weight: 700; font-family: {{字体}}; letter-spacing: 1px;">2026</span></td>
-      <td style="border: none; text-align: right;"><span style="color: #fefefe; font-size: 11px; letter-spacing: 3px; font-family: {{字体}};">ENGLISH TAG</span></td>
+      <td style="border: none; text-align: left;"><span data-layout-text="true" style="color: #fefefe; font-size: 15px; font-weight: 700; font-family: {{字体}}; letter-spacing: 1px;">2026</span></td>
+      <td style="border: none; text-align: right;"><span data-layout-text="true" style="color: #fefefe; font-size: 11px; letter-spacing: 3px; font-family: {{字体}};">ENGLISH TAG</span></td>
     </tr>
   </table>
 </section>
@@ -99,7 +101,7 @@
 
 ```html
 <section style="padding: 40px 24px 0;">
-  <p style="margin: 0; line-height: 1;"><span style="font-size: 56px; font-weight: 900; color: {{水印色}}; font-family: {{字体}};">01</span></p>
+  <p style="margin: 0; line-height: 1;"><span data-layout-text="true" style="font-size: 56px; font-weight: 900; color: {{水印色}}; font-family: {{字体}};">01</span></p>
   <p style="margin: 0 0 20px 0;"><span style="font-size: 22px; font-weight: 800; color: {{标题色}}; line-height: 1.4; font-family: {{字体}};">章节标题</span></p>
 </section>
 ```
@@ -109,7 +111,7 @@
 ```html
 <section style="padding: 36px 24px 16px;">
   <p style="margin: 0;">
-    <span style="display: inline-block; background-color: {{主色}}; color: #fefefe; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 4px; margin-right: 10px;">01</span>
+    <span data-layout-text="true" style="display: inline-block; background-color: {{主色}}; color: #fefefe; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 4px; margin-right: 10px;">01</span>
     <span style="font-size: 18px; font-weight: 800; color: {{标题色}};">章节标题</span>
   </p>
 </section>
@@ -129,7 +131,7 @@
 
 ```html
 <section style="padding: 40px 24px 16px; text-align: center;">
-  <p style="margin: 0 0 8px 0;"><span style="font-size: 12px; color: {{辅助灰}}; letter-spacing: 3px;">— 01 —</span></p>
+  <p style="margin: 0 0 8px 0;"><span data-layout-text="true" style="font-size: 12px; color: {{辅助灰}}; letter-spacing: 3px;">— 01 —</span></p>
   <p style="margin: 0;"><span style="font-size: 18px; font-weight: 700; color: {{标题色}}; font-family: {{字体}};">章节标题</span></p>
 </section>
 ```
@@ -137,7 +139,7 @@
 深色页面的章节头（暗夜科技）：空格字距标签 + 双色标题，写在 td 内：
 
 ```html
-<p style="margin: 0 0 10px 0;"><span style="font-size: 10px; color: {{主色}}; letter-spacing: 4px;">核 心 定 义</span></p>
+<p style="margin: 0 0 10px 0;"><span style="font-size: 12px; color: {{主色}}; letter-spacing: 4px;">核 心 定 义</span></p>
 <p style="margin: 0 0 16px 0;"><span style="font-size: 24px; font-weight: 900; color: {{标题色}};">章节标题的<span style="color: {{主色}};">强调部分</span></span></p>
 ```
 
@@ -223,10 +225,10 @@
 ```html
 <section style="padding: 0 24px; margin-bottom: 16px;">
   <p style="margin: 0 0 10px 0; line-height: 1.7; font-size: 15px; color: {{正文色}};">
-    <span style="color: {{主色}}; font-weight: 700; margin-right: 8px;">1.</span>要点内容写在这里
+    <span data-layout-text="true" style="color: {{主色}}; font-weight: 700; margin-right: 8px;">1.</span>要点内容写在这里
   </p>
   <p style="margin: 0 0 10px 0; line-height: 1.7; font-size: 15px; color: {{正文色}};">
-    <span style="color: {{主色}}; font-weight: 700; margin-right: 8px;">2.</span>要点内容写在这里
+    <span data-layout-text="true" style="color: {{主色}}; font-weight: 700; margin-right: 8px;">2.</span>要点内容写在这里
   </p>
 </section>
 ```
@@ -235,7 +237,7 @@
 
 ```html
 <p style="margin: 0 0 12px 0; line-height: 1.7; font-size: 15px; color: {{正文色}};">
-  <span style="display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; background-color: {{主色}}; color: #fefefe; border-radius: 50%; font-size: 12px; font-weight: 700; margin-right: 8px;">1</span>要点内容
+  <span data-layout-text="true" style="display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; background-color: {{主色}}; color: #fefefe; border-radius: 50%; font-size: 12px; font-weight: 700; margin-right: 8px;">1</span>要点内容
 </p>
 ```
 
@@ -253,11 +255,11 @@
 ```html
 <section style="margin: 24px 24px 0;">
   <p style="margin: 0 0 6px 0;">
-    <span style="display: inline-block; background-color: {{主色}}; color: #fefefe; font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 3px 8px; border-radius: 3px;">STEP 01</span>
+    <span data-layout-text="true" style="display: inline-block; background-color: {{主色}}; color: #fefefe; font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 3px 8px; border-radius: 3px;">STEP 01</span>
   </p>
   <p style="margin: 0 0 8px 0;"><span style="font-size: 16px; font-weight: 700; color: {{标题色}};">步骤标题</span></p>
   <p style="margin: 0 0 8px 0; line-height: 1.75; font-size: 15px; color: {{正文色}}; text-align: justify;">步骤说明文字。</p>
-  <p style="margin: 0;"><span style="font-size: 13px; color: {{辅助灰}};">⚠︎ 这一步的注意事项（可选）</span></p>
+  <p style="margin: 0;"><span data-layout-text="true" style="font-size: 13px; color: {{辅助灰}};">▲ </span><span style="font-size: 13px; color: {{辅助灰}};">这一步的注意事项（来自原文才保留）</span></p>
 </section>
 ```
 
@@ -331,20 +333,20 @@ console.log(answer);</p>
 ```html
 <section style="margin: 24px 24px;">
   <img src="https://example.com/image.jpg" style="width: 100%; height: auto; display: block; border-radius: 8px;">
-  <p style="margin: 8px 0 0 0; text-align: center;"><span style="font-size: 12px; color: {{辅助灰}};">▲ 图注说明文字</span></p>
+  <p style="margin: 8px 0 0 0; text-align: center;"><span data-layout-text="true" style="font-size: 12px; color: {{辅助灰}};">▲ </span><span style="font-size: 12px; color: {{辅助灰}};">图注说明文字</span></p>
 </section>
 ```
 
 **图片占位块**（本地图 / 只标位置没给地址的图；HTML 注释粘贴后会消失，必须用可视元素）：
 
 ```html
-<p style="margin: 24px 24px; border: 1px dashed {{边色}}; border-radius: 8px; background-color: {{浅底}}; padding: 26px 14px; text-align: center; font-size: 13px; line-height: 1.7; color: {{辅助灰}};"><strong style="color: {{主色}};">▢ 图 1</strong>&nbsp;&nbsp;店门口的木质招牌，下午的光</p>
+<p data-layout-text="true" style="margin: 24px 24px; border: 1px dashed {{边色}}; border-radius: 8px; background-color: {{浅底}}; padding: 26px 14px; text-align: center; font-size: 13px; line-height: 1.7; color: {{辅助灰}};"><strong style="color: {{主色}};">▢ 图 1</strong>&nbsp;&nbsp;店门口的木质招牌，下午的光</p>
 ```
 
 **视频占位块**（视频无法随粘贴带入，必须在编辑器内用「视频」按钮插入——这句关键提示集中放在占位清单和交付说明里，块内只留一句短的）：
 
 ```html
-<p style="margin: 24px 24px; border: 1px dashed {{边色}}; border-radius: 8px; background-color: {{浅底}}; padding: 34px 14px; text-align: center; font-size: 13px; line-height: 1.7; color: {{辅助灰}};"><strong style="color: {{主色}};">▶ 视频 1</strong>&nbsp;&nbsp;手冲注水的 30 秒（编辑器工具栏「视频」插入）</p>
+<p data-layout-text="true" style="margin: 24px 24px; border: 1px dashed {{边色}}; border-radius: 8px; background-color: {{浅底}}; padding: 34px 14px; text-align: center; font-size: 13px; line-height: 1.7; color: {{辅助灰}};"><strong style="color: {{主色}};">▶ 视频 1</strong>&nbsp;&nbsp;手冲注水的 30 秒（编辑器工具栏「视频」插入）</p>
 ```
 
 **占位块为什么必须是单个 `<p>`（删除体验）**：粘贴进编辑器后，删除动作 = **三击占位行（整段全选）→ Delete**，若留下空框再按一次退格——两步删完。做成"容器套多个段落"的话，用户要跨段拖选、容易剩半个空壳。同理块内不堆操作说明（保持单行），说明集中进文末占位清单。
@@ -352,7 +354,7 @@ console.log(answer);</p>
 **占位清单**（放正文末尾，同样单段落好删；带删除方法提示）：
 
 ```html
-<p style="margin: 30px 24px 0; border-top: 1px solid {{边色}}; padding: 12px 0 24px; font-size: 12px; line-height: 1.9; color: {{辅助灰}};"><strong>媒体占位清单</strong>　图 1 店门口木招牌 ／ 视频 1 注水 30 秒（视频粘贴带不进，必须用工具栏「视频」插入）<br>替换方法：三击占位行全选 → 删除（留空框再按一次退格）→ 原位插入媒体 ｜ 全部替换后把本行也删掉</p>
+<p data-layout-text="true" style="margin: 30px 24px 0; border-top: 1px solid {{边色}}; padding: 12px 0 24px; font-size: 12px; line-height: 1.9; color: {{辅助灰}};"><strong>媒体占位清单</strong>　图 1 店门口木招牌 ／ 视频 1 注水 30 秒（视频粘贴带不进，必须用工具栏「视频」插入）<br>替换方法：三击占位行全选 → 删除（留空框再按一次退格）→ 原位插入媒体 ｜ 全部替换后把本行也删掉</p>
 ```
 
 占位块外观跟随本篇设计（虚线框 + 浅底是默认形态，颜色全用设计 token）；全文占位统一编号。
@@ -367,7 +369,7 @@ console.log(answer);</p>
 <section style="width: 100%; height: 4px; background-color: {{主色}}; margin: 28px 0;"></section>
 
 <!-- 居中点（极简/暖纸） -->
-<section style="margin: 32px 0; text-align: center;"><span style="color: {{辅助灰}}; font-size: 14px; letter-spacing: 8px;">· · ·</span></section>
+<section style="margin: 32px 0; text-align: center;"><span data-layout-text="true" style="color: {{辅助灰}}; font-size: 14px; letter-spacing: 8px;">· · ·</span></section>
 ```
 
 深色页分隔带用骨架里的 `<tr><td>` 形式（见 0 节）。
@@ -378,8 +380,8 @@ END 标记 + 互动引导（按方向调整语气）：
 
 ```html
 <section style="margin: 40px 24px 0; text-align: center;">
-  <p style="margin: 0 0 24px 0;"><span style="font-size: 12px; color: {{辅助灰}}; letter-spacing: 6px;">— END —</span></p>
-  <p style="margin: 0; font-size: 14px; color: {{正文色}}; line-height: 1.8;">你怎么看？评论区聊聊 👇</p>
+  <p style="margin: 0 0 24px 0;"><span data-layout-text="true" style="font-size: 12px; color: {{辅助灰}}; letter-spacing: 6px;">— END —</span></p>
+  <p data-layout-text="true" style="margin: 0; font-size: 14px; color: {{正文色}}; line-height: 1.8;">你怎么看？评论区聊聊 👇</p>
 </section>
 ```
 
@@ -387,12 +389,12 @@ END 标记 + 互动引导（按方向调整语气）：
 
 ## 15. 参考资料（外链处理）
 
-外链不可点（未认证号），统一收到文末；正文中对应位置加上标 `<span style="font-size: 11px; color: {{主色}};">[1]</span>`：
+外链不可点（未认证号），统一收到文末；正文中对应位置加上标 `<span data-layout-text="true" style="font-size: 11px; color: {{主色}};">[1]</span>`：
 
 ```html
 <section style="margin: 28px 24px 0; border-top: 1px solid {{边色}}; padding-top: 14px;">
-  <p style="margin: 0 0 8px 0;"><span style="font-size: 13px; font-weight: 700; color: {{辅助灰}};">参考资料</span></p>
-  <p style="margin: 0 0 6px 0; font-size: 12px; line-height: 1.7; color: {{辅助灰}}; word-break: break-all;">[1] 文章标题 — example.com/path</p>
+  <p data-layout-text="true" style="margin: 0 0 8px 0;"><span style="font-size: 13px; font-weight: 700; color: {{辅助灰}};">参考资料</span></p>
+  <p data-layout-text="true" style="margin: 0 0 6px 0; font-size: 12px; line-height: 1.7; color: {{辅助灰}}; word-break: break-all;">[1] 文章标题 — https://example.com/path</p>
 </section>
 ```
 
@@ -404,9 +406,9 @@ END 标记 + 互动引导（按方向调整语气）：
 ```html
 <section style="margin: 32px 24px 0; border-top: 1px solid {{边色}}; padding-top: 22px; text-align: center;">
   <!-- 以下账号信息为占位，发布前替换 -->
-  <p style="margin: 0 0 6px 0;"><span style="font-size: 14px; font-weight: 700; color: {{标题色}}; letter-spacing: 1px;">【公众号名称】</span></p>
-  <p style="margin: 0 0 14px 0;"><span style="font-size: 12px; color: {{辅助灰}};">【一句话账号简介】</span></p>
-  <p style="margin: 0;"><span style="font-size: 12px; color: {{主色}};">【关注引导语，按文章气质改写】</span></p>
+  <p data-layout-text="true" style="margin: 0 0 6px 0;"><span style="font-size: 14px; font-weight: 700; color: {{标题色}}; letter-spacing: 1px;">【公众号名称】</span></p>
+  <p data-layout-text="true" style="margin: 0 0 14px 0;"><span style="font-size: 12px; color: {{辅助灰}};">【一句话账号简介】</span></p>
+  <p data-layout-text="true" style="margin: 0;"><span style="font-size: 12px; color: {{主色}};">【关注引导语，按文章气质改写】</span></p>
 </section>
 ```
 

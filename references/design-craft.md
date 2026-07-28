@@ -1,7 +1,7 @@
 # 设计感手艺库（让版面"看起来被设计过"）
 
 `wechat-compat.md` 保证不崩，`guidelines.md` 保证不乱——这份文件保证**好看**。
-所有手法都已通过微信兼容硬约束（无 flex/渐变/定位，rgba 只用于文字色）。
+代码片段以微信核心硬禁用项为边界（无 flex/渐变/定位，rgba 背景不用）；阴影、渐进增强与具体组合仍必须经过四道门和公众号手机预览，不能靠这份手艺库替代验证。
 
 > **先分清两类规则——这关系到整个技能的灵魂：**
 > - **硬规则**只有两处：`wechat-compat.md`（微信兼容，违反就崩）和 SKILL 的内容零改动（改了原文就是错）。它们与文章无关，任何文章都不可违反。
@@ -152,7 +152,7 @@
   <span style="color: #F0EBE2; text-shadow: 0 0 12px rgba(216,163,91,0.35);">深底标题发微光</span>
   <span style="color: #3E5C45; text-shadow: 2px 2px 0 #C9D6CC;">浅底标题印刷错位感</span>
   ```
-- **box-shadow inset 做色条/内描边**（一个属性顶一个额外元素，三端安全）：
+- **box-shadow inset 做色条/内描边**（一个属性顶一个额外元素；双层阴影属于谨慎项，必须看真渲染与手机预览）：
   ```html
   <section style="box-shadow: inset 0 -3px 0 {{主色}}, 0 2px 10px rgba(0,0,0,0.05); padding: 18px;">底部主色条 + 浮起</section>
   ```

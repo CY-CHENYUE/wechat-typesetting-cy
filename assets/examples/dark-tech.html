@@ -4,7 +4,7 @@
   主色: #FF4500 (OrangeRed) / #FFB300 (Amber)
   背景: #080808 (近纯黑)
   用途: 展示整页深色 table 骨架的组装方式，生成时参考模式而非整体套用
-  发布方式: 浏览器打开 → 选中内容复制 → 粘贴进公众号编辑器（新版预览外壳见 assets/preview-shell.html）
+  发布方式: 浏览器打开 → 一键复制 → 粘贴进公众号编辑器
 
   微信适配注意事项：
   1. 主布局用 <table border-collapse:collapse> 消除 section 间隙
@@ -21,16 +21,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>微信公众号排版预览 — 暗黑科技风</title>
 <style>
-  body { margin: 0; padding: 40px; background: #222; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 16px 80px; background: #222; font-family: -apple-system, 'PingFang SC', sans-serif; }
+  .toolbar {
+    position: sticky; top: 12px; z-index: 10;
+    max-width: 677px; margin: 0 auto 8px;
+    background: #fff; border-radius: 12px; padding: 12px 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.22);
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .toolbar button { border: none; border-radius: 8px; padding: 9px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  #copy-btn { background: #07C160; color: #fff; }
+  #width-btn { background: #F2F2F2; color: #333; }
+  .hint, .meta { font-size: 12px; color: #888; }
+  .meta { max-width: 677px; margin: 0 auto 16px; padding: 0 4px; color: #bbb; }
   .preview-wrapper {
     max-width: 677px;
     margin: 0 auto;
     box-shadow: 0 2px 30px rgba(0,0,0,0.5);
   }
+  body.phone .preview-wrapper { max-width: 375px; }
 </style>
 </head>
 <body>
+<div class="toolbar">
+  <button id="copy-btn" onclick="copyContent()">一键复制到公众号</button>
+  <button id="width-btn" onclick="document.body.classList.toggle('phone'); this.textContent = document.body.classList.contains('phone') ? '电脑宽度' : '手机宽度';">手机宽度</button>
+  <span class="hint">只复制下方公众号正文；预览外壳不会进入编辑器</span>
+</div>
+<div class="meta">暗夜科技·组件示例｜备选：商务蓝灰 / 学术线框</div>
 <div class="preview-wrapper">
+<div id="wechat-content">
+
+<!-- 风格方向: 暗夜科技·组件示例 | 备选: 商务蓝灰 / 学术线框 -->
 
 <!-- ========== 正文开始：以下内容复制到微信编辑器 ========== -->
 <section data-role="outer" style="background-color: #080808; color: rgb(240, 239, 235); padding: 0;">
@@ -39,7 +62,7 @@
 <!-- ==================== [组件] 封面 Banner ==================== -->
 <tr><td style="background-color: #080808; padding: 24px 24px 32px; text-align: center; border: none;">
   <!-- 顶部标签行 -->
-  <p style="margin: 0 0 24px 0; padding: 0;"><span style="font-size: 11px; color: #FF4500; letter-spacing: 4px; font-family: -apple-system, sans-serif;">&#9658; 深度调研 &middot; 2026.03</span></p>
+  <p style="margin: 0 0 24px 0; padding: 0;"><span style="font-size: 12px; color: #FF4500; letter-spacing: 4px; font-family: -apple-system, sans-serif;">&#9658; 深度调研 &middot; 2026.03</span></p>
   <!-- 主标题 -->
   <p style="margin: 0 0 8px 0; padding: 0;"><span style="font-size: 36px; font-weight: 900; color: #F0EFEB; letter-spacing: 2px; font-family: -apple-system, 'Helvetica Neue', sans-serif;">OPEN</span></p>
   <p style="margin: 0 0 16px 0; padding: 0;"><span style="font-size: 36px; font-weight: 900; color: #F0EFEB; letter-spacing: 2px; font-family: -apple-system, 'Helvetica Neue', sans-serif;">CLAW</span></p>
@@ -47,31 +70,33 @@
   <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 14px; color: rgba(240,239,235,0.6);">一句话描述产品定位</span></p>
   <p style="margin: 0 0 32px 0; padding: 0;"><span style="font-size: 12px; color: rgba(240,239,235,0.4);">补充说明文字写在这里</span></p>
   <!-- [组件] 三列数据栏（用嵌套 table 实现，不用 flex） -->
-  <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: 1px solid #1a1a1a; border-radius: 14px; overflow: hidden;">
+  <section style="border: 1px solid #1a1a1a; border-radius: 14px; overflow: hidden;">
+  <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse; table-layout: fixed; border: none;">
     <tr>
-      <td width="33%" style="background-color: #0f0f0f; padding: 20px 12px; text-align: center; border-right: 1px solid #1a1a1a;">
+      <td width="33%" style="background-color: #0f0f0f; padding: 20px 12px; text-align: center; word-break: break-all; border: none; border-right: 1px solid #1a1a1a;">
         <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 28px; font-weight: 900; color: #FF4500;">160K</span></p>
         <p style="margin: 0; padding: 0;"><span style="font-size: 10px; color: rgb(84,110,122);">GitHub Stars</span></p>
       </td>
-      <td width="33%" style="background-color: #0f0f0f; padding: 20px 12px; text-align: center; border-right: 1px solid #1a1a1a;">
+      <td width="33%" style="background-color: #0f0f0f; padding: 20px 12px; text-align: center; word-break: break-all; border: none; border-right: 1px solid #1a1a1a;">
         <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 28px; font-weight: 900; color: #FF4500;">150万</span></p>
-        <p style="margin: 0; padding: 0;"><span style="font-size: 10px; color: rgb(84,110,122);">Agent注册</span></p>
+        <p style="margin: 0; padding: 0;"><span style="font-size: 12px; color: rgb(84,110,122);">Agent注册</span></p>
       </td>
-      <td width="34%" style="background-color: #0f0f0f; padding: 20px 12px; text-align: center;">
+      <td width="34%" style="background-color: #0f0f0f; padding: 20px 12px; text-align: center; word-break: break-all; border: none;">
         <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 28px; font-weight: 900; color: #FF4500;">50+</span></p>
-        <p style="margin: 0; padding: 0;"><span style="font-size: 10px; color: rgb(84,110,122);">平台集成</span></p>
+        <p style="margin: 0; padding: 0;"><span style="font-size: 12px; color: rgb(84,110,122);">平台集成</span></p>
       </td>
     </tr>
   </table>
+  </section>
 </td></tr>
 
 <!-- [组件] 章节分隔带 -->
-<tr><td style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
+<tr><td data-role="divider" style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
 
 <!-- ==================== [组件] 章节头 + 能力卡片 ==================== -->
 <tr><td style="background-color: #080808; padding: 40px 24px 32px; border: none;">
   <!-- 章节标签（不用 ——，用空格分隔） -->
-  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 10px; color: #FF4500; letter-spacing: 4px;">核 心 定 义</span></p>
+  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 12px; color: #FF4500; letter-spacing: 4px;">核 心 定 义</span></p>
   <!-- 双色标题 -->
   <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #F0EFEB; line-height: 1.4;">它不是聊天机器人</span></p>
   <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #F0EFEB; line-height: 1.4;">它是你电脑里的</span><span style="font-size: 24px; font-weight: 900; color: #FF4500; line-height: 1.4;">AI员工</span></p>
@@ -95,17 +120,17 @@
 </td></tr>
 
 <!-- [组件] 章节分隔带 -->
-<tr><td style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
+<tr><td data-role="divider" style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
 
 <!-- ==================== [组件] 时间线章节 ==================== -->
 <tr><td style="background-color: #080808; padding: 40px 24px 32px; border: none;">
-  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 10px; color: #FF4500; letter-spacing: 4px;">关 键 时 间 线</span></p>
+  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 12px; color: #FF4500; letter-spacing: 4px;">关 键 时 间 线</span></p>
   <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #F0EFEB;">90天</span></p>
   <p style="margin: 0 0 24px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #FF4500;">从一个想法到改变行业</span></p>
   <!-- [组件] 时间线节点（绿色 = 正面） -->
   <section style="padding: 0 0 24px 24px; border-left: 2px solid #1a3a1a; margin-left: 8px;">
     <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 14px; color: #4CAF50;">&#9679;</span></p>
-    <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 11px; color: #4CAF50;">2025年11月</span></p>
+    <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 12px; color: #4CAF50;">2025年11月</span></p>
     <p style="margin: 0 0 6px 0; padding: 0;"><span style="font-size: 15px; font-weight: 700; color: #F0EFEB;">一小时从想法到原型</span></p>
     <p style="margin: 0; padding: 0;"><span style="font-size: 13px; color: rgba(240,239,235,0.5);">创始人独自一人，把想法做成了原型。</span></p>
   </section>
@@ -117,17 +142,17 @@
     <p style="margin: 0 0 8px 0; padding: 0;"><span style="font-size: 13px; color: rgba(240,239,235,0.5);">危机事件的描述文字。</span></p>
     <!-- 标签徽章 — 背景用实色 -->
     <section style="display: inline-block; background-color: #2a1212; border-radius: 4px; padding: 4px 10px;">
-      <span style="font-size: 11px; color: #F44336; font-weight: 600;">安全告警</span>
+      <span style="font-size: 12px; color: #F44336; font-weight: 600;">安全告警</span>
     </section>
   </section>
 </td></tr>
 
 <!-- [组件] 章节分隔带 -->
-<tr><td style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
+<tr><td data-role="divider" style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
 
 <!-- ==================== [组件] 事件列表章节 ==================== -->
 <tr><td style="background-color: #080808; padding: 40px 24px 32px; border: none;">
-  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 10px; color: #FF4500; letter-spacing: 4px;">真 实 事 件</span></p>
+  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 12px; color: #FF4500; letter-spacing: 4px;">真 实 事 件</span></p>
   <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #F0EFEB;">它做了这些事</span></p>
   <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #FF4500;">没人让它做</span></p>
   <p style="margin: 0 0 24px 0; padding: 0;"><span style="font-size: 13px; color: rgba(240,239,235,0.4);">这些不是功能演示。这是真实发生的事情。</span></p>
@@ -143,30 +168,30 @@
 </td></tr>
 
 <!-- [组件] 章节分隔带 -->
-<tr><td style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
+<tr><td data-role="divider" style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
 
 <!-- ==================== [组件] 引用观点章节 ==================== -->
 <tr><td style="background-color: #080808; padding: 40px 24px 32px; border: none;">
-  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 10px; color: rgba(240,239,235,0.4); letter-spacing: 4px;">各 方 观 点</span></p>
+  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 12px; color: rgba(240,239,235,0.4); letter-spacing: 4px;">各 方 观 点</span></p>
   <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #F0EFEB;">聪明人们</span></p>
   <p style="margin: 0 0 24px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #F0EFEB;">吵起来了</span></p>
   <!-- [组件] 引用卡片 — 背景用实色 #0f0f0f -->
   <section style="margin: 0 0 12px 0; border-left: 3px solid #FF4500; border-radius: 8px; padding: 20px; background-color: #0f0f0f;">
     <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 14px; color: #F0EFEB; line-height: 1.8;">「引用的观点文字放在这里，用书名号括起来。」</span></p>
-    <p style="margin: 0; padding: 0;"><span style="font-size: 11px; color: #FF4500; letter-spacing: 1px;">&mdash;&nbsp;&nbsp;来源名称 &middot; </span><span style="font-size: 11px; color: #4CAF50;">看多</span></p>
+    <p style="margin: 0; padding: 0;"><span style="font-size: 12px; color: #FF4500; letter-spacing: 1px;">&mdash;&nbsp;&nbsp;来源名称 &middot; </span><span style="font-size: 12px; color: #4CAF50;">看多</span></p>
   </section>
   <section style="margin: 0; border-left: 3px solid #FF4500; border-radius: 8px; padding: 20px; background-color: #0f0f0f;">
     <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 14px; color: #F0EFEB; line-height: 1.8;">「第二条引用观点放在这里。」</span></p>
-    <p style="margin: 0; padding: 0;"><span style="font-size: 11px; color: #FF4500; letter-spacing: 1px;">&mdash;&nbsp;&nbsp;来源名称 &middot; </span><span style="font-size: 11px; color: #FF9800;">中国视角</span></p>
+    <p style="margin: 0; padding: 0;"><span style="font-size: 12px; color: #FF4500; letter-spacing: 1px;">&mdash;&nbsp;&nbsp;来源名称 &middot; </span><span style="font-size: 12px; color: #FF9800;">中国视角</span></p>
   </section>
 </td></tr>
 
 <!-- [组件] 章节分隔带 -->
-<tr><td style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
+<tr><td data-role="divider" style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
 
 <!-- ==================== [组件] FEELS LIKE 类比卡 ==================== -->
 <tr><td style="background-color: #080808; padding: 40px 24px 32px; border: none;">
-  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 10px; color: #FF4500; letter-spacing: 4px;">看 懂 它 的 位 置</span></p>
+  <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 12px; color: #FF4500; letter-spacing: 4px;">看 懂 它 的 位 置</span></p>
   <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #F0EFEB;">用你熟悉的事</span></p>
   <p style="margin: 0 0 12px 0; padding: 0;"><span style="font-size: 24px; font-weight: 900; color: #FF4500;">理解它在哪里</span></p>
   <p style="margin: 0 0 24px 0; padding: 0;"><span style="font-size: 13px; color: rgba(240,239,235,0.4);">三个你可能亲历过的时刻，帮你感受现在的处境</span></p>
@@ -191,7 +216,7 @@
 </td></tr>
 
 <!-- [组件] 章节分隔带 -->
-<tr><td style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
+<tr><td data-role="divider" style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
 
 <!-- ==================== [组件] 排名列表章节 ==================== -->
 <tr><td style="background-color: #080808; padding: 40px 24px 32px; border: none;">
@@ -237,7 +262,7 @@
 </td></tr>
 
 <!-- [组件] 章节分隔带 -->
-<tr><td style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
+<tr><td data-role="divider" style="background-color: #0d0d0d; height: 16px; font-size: 0; line-height: 0; border: none; border-width: 0;">&nbsp;</td></tr>
 
 <!-- ==================== [组件] 结尾区（居中递进）==================== -->
 <!-- 不用 linear-gradient，用实色 #0e0600 -->
@@ -257,7 +282,7 @@
   <p style="margin: 0 0 8px 0; padding: 0;"><span style="font-size: 16px; font-weight: 700; color: #F0EFEB;">公众号名称</span></p>
   <p style="margin: 0 0 4px 0; padding: 0;"><span style="font-size: 12px; color: rgba(240,239,235,0.4);">一句话介绍</span></p>
   <p style="margin: 0 0 16px 0; padding: 0;"><span style="font-size: 12px; color: rgba(240,239,235,0.3);">补充说明</span></p>
-  <p style="margin: 0; padding: 0;"><span style="font-size: 11px; color: rgba(240,239,235,0.3);">扫码关注 &middot; 持续更新</span></p>
+  <p style="margin: 0; padding: 0;"><span style="font-size: 12px; color: rgba(240,239,235,0.3);">扫码关注 &middot; 持续更新</span></p>
 </td></tr>
 
 </table>
@@ -265,5 +290,39 @@
 <!-- ========== 正文结束 ========== -->
 
 </div>
+</div>
+<script>
+async function copyContent() {
+  const el = document.getElementById('wechat-content');
+  const btn = document.getElementById('copy-btn');
+  let ok = false;
+  // 首选 Clipboard API：同时写入 text/html 与 text/plain
+  try {
+    const item = new ClipboardItem({
+      'text/html': new Blob([el.innerHTML], { type: 'text/html' }),
+      'text/plain': new Blob([el.innerText], { type: 'text/plain' })
+    });
+    await navigator.clipboard.write([item]);
+    ok = true;
+  } catch (e) { /* 走兜底 */ }
+  // 兜底：选区复制（与手动全选复制等效）
+  if (!ok) {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    ok = document.execCommand('copy');
+    sel.removeAllRanges();
+  }
+  if (ok) {
+    btn.classList.add('done');
+    btn.textContent = '✓ 已复制，去编辑器粘贴';
+    setTimeout(() => { btn.classList.remove('done'); btn.textContent = '一键复制到公众号'; }, 3000);
+  } else {
+    alert('自动复制失败：请手动选中下方全部内容后复制');
+  }
+}
+</script>
 </body>
 </html>
