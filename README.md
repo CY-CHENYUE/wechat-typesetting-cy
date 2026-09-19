@@ -87,7 +87,7 @@ wechat-typesetting-cy/
 
 ## 许可证
 
-MIT License
+[Apache License 2.0](LICENSE)。该许可适用于 2026-09-19 起发布的当前版本；历史版本已授予的许可保持有效。
 
 ---
 

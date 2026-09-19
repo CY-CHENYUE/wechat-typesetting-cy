@@ -278,7 +278,9 @@ def semantic_output(content):
     parser.feed(content)
     return (
         normalize("".join(parser.parts)),
-        [normalize("".join(group)) for group in parser.layout_groups],
+        # Keep token boundaries until URL exclusion; normalization can join
+        # a URL with Chinese prose that follows it across whitespace.
+        ["".join(group) for group in parser.layout_groups],
         set(source_urls("".join(parser.visible_parts))).union(
             value
             for url in parser.visible_urls
@@ -346,6 +348,12 @@ def layout_text_overlaps_source(expected, layout_groups):
         ascii_count = len(re.findall(r"[a-z0-9]", shared))
         return chinese_count >= 3 or ascii_count >= 5
 
+    # Reference targets are checked independently as exact URL tokens. Domain
+    # and path words are not copied prose; keep checking text outside the URL.
+    layout_groups = [
+        re.sub(r"https?://[^\s<>\])]+", "", value)
+        for value in layout_groups
+    ]
     expected_meaningful = meaningful(expected)
     violations = []
     for value in layout_groups:

@@ -804,6 +804,41 @@ class ValidatorTestCase(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_completeness_reference_url_brand_is_not_duplicate_prose(self):
+        source = "阅读 Example 的[使用指南](https://docs.example.com/guide)。"
+        result = self.run_completeness(
+            source,
+            '<p>阅读 Example 的使用指南。</p>'
+            '<p data-layout-text="true">[1] https://docs.example.com/guide</p>',
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_completeness_reference_url_does_not_exempt_copied_prose(self):
+        source = "阅读 Example 的[使用指南](https://docs.example.com/guide)。"
+        for marked in (
+            '阅读 Example 的使用指南。 https://docs.example.com/guide',
+            'https://docs.example.com/guide 阅读 Example 的使用指南。',
+        ):
+            with self.subTest(marked=marked):
+                result = self.run_completeness(
+                    source,
+                    '<p>阅读 Example 的使用指南。</p>'
+                    f'<p data-layout-text="true">{marked}</p>',
+                )
+                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+
+    def test_completeness_reference_url_still_requires_exact_target(self):
+        source = "阅读 Example 的[使用指南](https://docs.example.com/guide)。"
+        for footnote in (
+            '',
+            '<p data-layout-text="true">https://docs.example.com/changed</p>',
+        ):
+            with self.subTest(footnote=footnote):
+                result = self.run_completeness(
+                    source, '<p>阅读 Example 的使用指南。</p>' + footnote,
+                )
+                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+
     def test_completeness_preserves_code_and_english_word_spaces(self):
         inline = self.run_completeness(
             "使用 `foo_bar`，再运行 `a*b*c`。",
